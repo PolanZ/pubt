@@ -1,0 +1,54 @@
+#!/usr/bin/env node
+
+const program = require('commander')
+const chalk = require('chalk')
+const fs = require('fs')
+const path = require('path')
+
+program
+  .version(require('../package').version)
+  .usage('<commander> [option]')
+  .command('test', '部署至测试环境')
+  .command('prod', '部署至生产环境')
+  .option('-i, --init', '添加配置文件.pubtrc.js')
+
+/**
+ * Help.
+ */
+program.on('--help', () => {
+  console.log()
+  console.log('  Examples:')
+  console.log()
+  console.log(chalk.gray('    # 输出部署发布程序到测试或生产环境'))
+  console.log('    $ pubt test [option]')
+  console.log('    $ pubt prod [option]')
+  console.log()
+})
+
+program.parse(process.argv)
+
+if (program.init) init()
+
+/**
+ * Init.
+ */
+function init () {
+  let dir = path.join(process.cwd(), '.pubtrc.js')
+  if (fs.existsSync(dir)) {
+    console.log(chalk.yellow('配置文件 .pubtrc.js 已经存在！'))
+  } else {
+    let data = `module.exports = {
+      "test": {},
+      "pord": {}
+    }`
+    data = data.replace(/\n|\t|\s/g, '')
+    // data = JSON.stringify(data, null, 2)
+    // data = JSON.parse(data)
+    // console.log(data)
+    // fs.writeFileSync('.pubtrc.js', data/* new Buffer(data) */)
+    fs.writeFile(dir, new Buffer(data), err => {
+      if (err) console.log(chalk.red('添加配置文件 .pubtrc.js 失败'))
+      console.log(chalk.green('成功添加配置文件 .pubtrc.js '))
+    })
+  }
+}

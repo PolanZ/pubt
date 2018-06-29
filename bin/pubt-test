@@ -1,0 +1,78 @@
+#!/usr/bin/env node
+
+const program = require('commander')
+const chalk = require('chalk')
+const ora = require('ora')
+const exists = require('fs').existsSync
+const path = require('path')
+const rm = require('rimraf').sync
+
+const logger = require('../lib/logger')
+const generate = require('../lib/generate')
+
+program
+  .usage('-n [path] -o [path]')
+  .option('-n, --inpath [path]', '输入目录，例：e://dist')
+  .option('-o, --outpath [path]', '输出目录，例：e://release')
+
+/**
+ * Help.
+ */
+program.on('--help', () => {
+  console.log()
+  console.log('  Examples:')
+  console.log()
+  console.log(chalk.gray('    # 输出部署测试环境'))
+  console.log('    $ pubt test --inpath [path] --outpath [path]')
+  console.log()
+})
+
+/**
+ * Help.
+ */
+function help() {
+  program.parse(process.argv)
+  // console.log(program.inpath, program.outpath)
+  // if (!program.outpath) return program.help()
+}
+help()
+
+/**
+ *  Setting 
+ */
+let inPath = program.inpath
+let outPath = program.outpath
+
+/* input path for vue built `dist` */
+if (!inPath || typeof inPath === 'undefined') {
+  inPath = path.join(process.cwd(), 'dist')
+}
+/* out path for vue built `dist` */
+if (!outPath || typeof outPath === 'undefined') {
+  outPath = path.join(process.cwd(), 'release/test')
+} else if (!exists(outPath)) {
+  outPath = path.join(process.cwd(), outPath)
+}
+
+if (!exists(inPath)) {
+  logger.fatal('源路径有误，无法解析路径目录！', inPath)
+}/*  else if (!exists(outPath)) {
+  logger.fatal('输出路径有误，无法解析路径目录！', outPath)
+} */
+
+run()
+
+/**
+ * next run
+ */
+function run () {
+  const spinner = ora('publish tools runing...')
+  spinner.start()
+  generate('test', inPath, outPath, err => {
+    spinner.stop()
+    if (err) logger.fatal(err)
+    console.log()
+    logger.success('Publish ouput in', outPath)
+    logger.success('Publish Success [输出部署测试版本成功].')
+  })
+}
