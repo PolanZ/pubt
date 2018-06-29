@@ -2,9 +2,19 @@
   "name": "publishtools",
   "version": "0.0.0",
   "description": "一个前端发布工具，快速修改相差配置测试版和生产版",
-  "main": "bin/pubt",
+  "main": "index.js",
+  "bin": {
+    "svi": "./bin/svi"
+  },
+  "directories": {
+    "lib": "lib"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PolanZ/pubt.git"
   },
   "keywords": [
     "tools",
@@ -12,6 +22,10 @@
   ],
   "author": "PolanZ",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PolanZ/pubt/issues"
+  },
+  "homepage": "https://github.com/PolanZ/pubt#readme",
   "dependencies": {
     "async": "^2.6.1",
     "chalk": "^2.4.1",
