@@ -4,7 +4,7 @@
   "description": "一个前端发布工具，快速修改相差配置测试版和生产版",
   "main": "index.js",
   "bin": {
-    "svi": "./bin/svi"
+    "pubt": "./bin/pubt"
   },
   "directories": {
     "lib": "lib"
