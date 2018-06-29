@@ -3,6 +3,7 @@
 
 > 特点: 专注vuejs开发，基础源目录为dist，部署输出目录release
 
+[English Docuemnt](https://github.com/PolanZ/pubt/blob/master/readme_en.md)
 
 ### 局部安装和用法
 
