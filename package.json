@@ -1,6 +1,6 @@
 {
   "name": "pubt",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "一个前端发布工具，快速修改相关配置测试版和生产版",
   "main": "index.js",
   "bin": {

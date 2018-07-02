@@ -4,6 +4,8 @@ const program = require('commander')
 const chalk = require('chalk')
 const fs = require('fs')
 const path = require('path')
+const readline = require('readline')
+const os = require('os')
 
 program
   .version(require('../package').version)
@@ -37,17 +39,20 @@ function init () {
   if (fs.existsSync(dir)) {
     console.log(chalk.yellow('配置文件 .pubtrc.js 已经存在！'))
   } else {
-    let data = `module.exports = {
-      "test": {},
-      "pord": {}
-    }`
-    data = data.replace(/\n|\t|\s/g, '')
-    // data = JSON.stringify(data, null, 2)
-    // data = JSON.parse(data)
-    // console.log(data)
-    // fs.writeFileSync('.pubtrc.js', data/* new Buffer(data) */)
-    fs.writeFile(dir, new Buffer(data), err => {
-      if (err) console.log(chalk.red('添加配置文件 .pubtrc.js 失败'))
+    const confFile = '../.pubtrc.js'
+    const fRead = fs.createReadStream(confFile)
+    const fWrite = fs.createWriteStream('.pubtrc.js')
+
+    const objReadline = readline.createInterface({
+      input: fRead/* ,
+      output: fWrite, 
+      terminal: true */
+    })
+    objReadline.on('line', (line) => {
+      fWrite.write(line + os.EOL)
+    })
+    // console.log(conf)
+    objReadline.on('close', () => {
       console.log(chalk.green('成功添加配置文件 .pubtrc.js '))
     })
   }
