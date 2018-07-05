@@ -61,6 +61,19 @@ module.exports = {
 }
 ```
 
+### 怎么配置使用？
+
+利用的是[```handlebars```](https://github.com/wycats/handlebars.js)格式替换，比如你配置关键字是```API_ROOT```，那么你api代码的应该是```{{ API_ROOT }}```
+
+代码字段和配置文件里的关键字一一相对应替换
+
+例如对应配置文件示例：
+```
+const apiUrl = process.env.NODE_ENV === 'production' ? '{{ API_RROT }}' : 'http://172.xx.xx.xxx:8080/'
+```
+
+
+
 ### Windows 建议
 
 ````

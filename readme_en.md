@@ -61,6 +61,20 @@ module.exports = {
 }
 ```
 
+### how to use？
+
+Use The [```handlebars```](https://github.com/wycats/handlebars.js) format replacement，For example, you configure the keyword ```API_ROOT```, 
+So your API code should be ```{{ API_ROOT }}```
+
+The code fields and the key words in the configuration file should be replaced one by one.
+
+
+An example of a corresponding configuration：
+```
+const apiUrl = process.env.NODE_ENV === 'production' ? '{{ API_RROT }}' : 'http://172.xx.xx.xxx:8080/'
+```
+
+
 ### Windows Suggest
 
 ````
